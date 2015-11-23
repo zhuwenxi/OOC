@@ -3,14 +3,33 @@
 
 #include "Object.h"
 #include "Class.h"
+#include "Point.h"
+#include "Point_r.h"
+
+void * test_ctor(void * self, va_list *args)
+{
+	printf("test_ctor\n");
+	return self;
+}
 
 int main()
 {	
-	void * obj = new (Object);
-	void * cls = new (Class);
-	
-	delete(obj);
-	delete(cls);
+	initPoint();
+
+	printf("===================================\n");
+
+	struct Point * point = new (Point, 1, 2);
+
+	draw(point);
+
+	delete(point);
+	//printf("%s\n", ((struct Class *)Point)->super->name);
+
+	/*printf("%d\n", ((struct Class *)Class)->super == Object);
+	printf("%d\n", ((struct Class *)Object)->super == Object);*/
+
+	// printf("%p\n", ((struct Class *)PointClass)->super);
+
 
 	/*
 	 * Pause here, to display the command-line output.

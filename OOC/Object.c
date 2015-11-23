@@ -4,6 +4,8 @@
 #include "Object_r.h"
 #include "Log.h"
 
+#include <assert.h>
+
 void * Object_ctor(void * self, va_list * args)
 {
 	log("Object_ctor()\n");
@@ -55,6 +57,42 @@ const struct Class object[] =
 const void * const Object = object;
 const void * const Class = object + 1;
 
-// TO DO
-bool equals(const void * self, const void * another);
-int hash(const void * self);
+bool equals(const void * self, const void * another)
+{
+	log("equals()\n");
+	return self == another;
+}
+
+int hash(const void * self)
+{
+	log("hash()\n");
+	return 0;
+}
+
+struct Class * super(const void * _self)
+{
+	const struct Class * self = _self;
+
+	assert(self->super);
+
+	return self->super;
+}
+
+void * super_ctor(const void * class, const void * self, va_list * args)
+{
+	const struct Class * superclass = super(class);
+
+	assert(superclass && superclass->ctor);
+
+	return superclass->ctor(self, args);
+}
+
+void * ctor(void * self, va_list * args)
+{
+
+}
+
+void * dtor(void * self)
+{
+
+}

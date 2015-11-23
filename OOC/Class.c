@@ -1,18 +1,54 @@
 #include "Class.h"
 #include "Class_r.h"
+#include "Object.h"
+#include "Object_r.h"
 #include "Log.h"
 
 #include <stdarg.h>
+#include <string.h>
+#include <assert.h>
+
 
 void * Class_ctor(void * _self, va_list * args)
 {
 	struct Class * self = _self;
+	typedef void (*voidf)();
+	voidf selector;
+	va_list arg;
+
+	log("Class_ctor()\n");
 
 	self->name = va_arg(*args, char *);
 	self->super = va_arg(*args, struct Class *);
 	self->size = va_arg(*args, size_t);
 
-	log("Class_ctor()\n");
+	size_t offset = offsetof(struct Class, ctor);
+
+	memcpy((char *)self + offset, (char *)self->super + offset, sizeOf(self->super) - offset);
+	
+	arg = *args;
+	while ((selector = va_arg(arg, voidf)))
+	{
+		voidf method = va_arg(arg, voidf);
+
+		if (selector == ctor)
+		{
+			self->ctor = method;
+		} 
+		else if (selector == dtor)
+		{
+			self->dtor = method;
+		}
+		else if (selector == hash)
+		{
+			self->hash = method;
+		}
+		else if (selector == equals)
+		{
+			self->equals = equals;
+		}
+	}
+
 	return self;
 }
 
@@ -32,4 +68,13 @@ int Class_hash(const void * self)
 {
 	log("Class_hash()\n");
 	return 0;
+}
+
+size_t sizeOf(const void * _class)
+{
+	const struct Class ** cp = _class;
+
+	assert(cp && *cp);
+
+	return (*cp)->size;
 }
