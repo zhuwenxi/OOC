@@ -2,8 +2,16 @@
 #include "Class_r.h"
 #include "Log.h"
 
-void * Class_ctor(void * self, va_list * args)
+#include <stdarg.h>
+
+void * Class_ctor(void * _self, va_list * args)
 {
+	struct Class * self = _self;
+
+	self->name = va_arg(*args, char *);
+	self->super = va_arg(*args, struct Class *);
+	self->size = va_arg(*args, size_t);
+
 	log("Class_ctor()\n");
 	return self;
 }
