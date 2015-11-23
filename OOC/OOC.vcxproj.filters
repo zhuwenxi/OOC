@@ -27,6 +27,9 @@
     <ClCompile Include="Class.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="New.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object_r.h">
@@ -44,5 +47,11 @@
     <ClInclude Include="Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="New.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.gitignore" />
   </ItemGroup>
 </Project>

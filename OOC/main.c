@@ -6,8 +6,12 @@
 
 int main()
 {	
-	printf("name: %s\n", ((struct Class *)Object)->name);
-	printf("name: %s\n", ((struct Class *)Class)->name);
+	void * obj = new (Object);
+	void * cls = new (Class);
+	
+	delete(obj);
+	delete(cls);
+
 	/*
 	 * Pause here, to display the command-line output.
 	 */
