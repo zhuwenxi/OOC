@@ -30,7 +30,7 @@ int Object_hash(const void * self)
 	return 0;
 }
 
-const struct Class object[] =
+static const struct Class object[] =
 {
 	{
 		{ object + 1},
@@ -95,4 +95,61 @@ void * ctor(void * self, va_list * args)
 void * dtor(void * self)
 {
 
+}
+
+/*
+* Dynamic Type Checking:
+*/
+
+bool isA(const void * _self, const void * class)
+{
+	return _self && classOf(_self) == class;
+}
+
+bool isOf(const void * _self, const void * _class)
+{
+	if (_self != NULL)
+	{
+		struct Class * class = classOf(_self);
+
+		while (class != _class)
+		{
+			if (class != Object)
+			{
+				class = super(class);
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		return true;
+		
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void * cast(const void * class, const void * _self)
+{
+	if (isOf(_self, class))
+	{
+		return _self;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+void * classOf(const void * self)
+{
+	const struct Object * obj = self;
+
+	assert(obj && obj->class);
+
+	return obj->class;
 }

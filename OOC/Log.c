@@ -11,5 +11,8 @@ void set_debug_tag(bool tag)
 
 void log(char *msg)
 {
-	printf(msg);
+	if (debug_tag)
+	{
+		printf(msg);
+	}
 }

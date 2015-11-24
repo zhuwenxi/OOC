@@ -4,7 +4,7 @@
 ## Doing:
 1. Abstract Data Types
 2. Class Hierarchy
-3. Danamic Type Checking
+3. Dynamic Type Checking
 4. Delegate
 
 ## To Do:

@@ -14,21 +14,15 @@ void * test_ctor(void * self, va_list *args)
 
 int main()
 {	
+	set_debug_tag(false);
 	initPoint();
-
-	printf("===================================\n");
 
 	struct Point * point = new (Point, 1, 2);
 
-	draw(point);
+	// draw(point);
+	printf("%d\n", isOf(Point, Object));
 
 	delete(point);
-	//printf("%s\n", ((struct Class *)Point)->super->name);
-
-	/*printf("%d\n", ((struct Class *)Class)->super == Object);
-	printf("%d\n", ((struct Class *)Object)->super == Object);*/
-
-	// printf("%p\n", ((struct Class *)PointClass)->super);
 
 
 	/*
