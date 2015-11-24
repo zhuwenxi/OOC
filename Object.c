@@ -87,6 +87,15 @@ void * super_ctor(const void * class, const void * self, va_list * args)
 	return superclass->ctor(self, args);
 }
 
+void * super_dtor(const void * class, const void * self)
+{
+	const struct Class * superclass = super(class);
+
+	assert(superclass && superclass->dtor);
+
+	return superclass->dtor(self);
+}
+
 void * ctor(void * self, va_list * args)
 {
 
