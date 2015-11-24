@@ -2,7 +2,7 @@
 
 #include "stdio.h"
 
-static bool debug_tag = true;
+static bool debug_tag = false;
 
 void set_debug_tag(bool tag)
 {
