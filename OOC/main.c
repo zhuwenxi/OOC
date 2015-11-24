@@ -19,10 +19,9 @@ int main()
 
 	struct Point * point = new (Point, 1, 2);
 
-	// draw(point);
-	printf("%d\n", isOf(Point, Object));
+	draw(point);
 
-	delete(point);
+	delete(point);	
 
 
 	/*

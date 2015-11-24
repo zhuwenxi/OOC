@@ -1,6 +1,9 @@
 #ifndef __POINT_R_H__
 #define __POINT_R_H__
 
+#include "Object_r.h"
+#include "Class_r.h"
+
 struct Point
 {
 	struct Object _;
