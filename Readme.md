@@ -5,9 +5,9 @@
 1. Abstract Data Types
 2. Class Hierarchy
 3. Danamic Type Checking
+4. Delegate
 
 ## To Do:
 1. Exception
-2. Delegate
-3. The OOC Preprocessor
-4. Static Construction
+2. The OOC Preprocessor
+3. Static Construction
