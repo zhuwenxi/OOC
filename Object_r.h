@@ -2,6 +2,7 @@
 #define __OBJECT_R_H__
 
 #include <stdbool.h>
+#include <stdarg.h>
 
 struct Object
 {
