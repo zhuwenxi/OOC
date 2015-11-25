@@ -1,12 +1,14 @@
 #ifndef __SET_H__
 #define __SET_H__
 
-const void * Set;
+extern const void * Set;
 
-const void * SetClass;
+extern const void * SetClass;
 
 const void * SetItem;
 
 void * add(void * self, void * setItem);
+
+void loadSet();
 
 #endif

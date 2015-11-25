@@ -7,7 +7,9 @@
 struct Set
 {
 	struct Object _;
-	struct SetItem * item;
+	struct SetItem * items;
+	int length;
+	int capacity;
 };
 
 struct SetClass

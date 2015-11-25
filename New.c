@@ -30,6 +30,7 @@ void * new(void * _class, ...)
 
 		va_start(args, _class);
 		obj = ctor(obj, &args);
+		assert(obj);
 		va_end(args);
 
 		return obj;
@@ -44,7 +45,9 @@ void delete(void * obj)
 {
 	if (obj != NULL)
 	{
-		free(dtor(obj));
+		obj = dtor(obj);
+		assert(obj);
+		free(obj);
 	}
 }
 
