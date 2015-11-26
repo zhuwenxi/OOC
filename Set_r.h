@@ -7,7 +7,7 @@
 struct Set
 {
 	struct Object _;
-	struct SetItem * items;
+	void ** items;
 	int length;
 	int capacity;
 };
@@ -18,10 +18,10 @@ struct SetClass
 	void * (*add)(void * self, void * item);
 };
 
-struct SetItem
-{
-	struct Object _;
-	void * data;
-};
+//struct SetItem
+//{
+//	struct Object _;
+//	void * data;
+//};
 
 #endif
