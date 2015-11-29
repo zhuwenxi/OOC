@@ -55,6 +55,16 @@ static void * String_dtor(void * _self)
 	return self;
 }
 
+void printString(void * _string)
+{
+	struct String * string = _string;
+
+	if (string != NULL)
+	{
+		printf("%s\n", string->text);
+	}
+}
+
 
 const void * String;
 

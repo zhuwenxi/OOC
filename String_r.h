@@ -9,4 +9,6 @@ struct String
 	char * text;
 };
 
+void printString(void * _string);
+
 #endif
