@@ -14,27 +14,122 @@
 static void * LinkList_dtor(void * _self)
 {
 	struct LinkList * self = cast(LinkList, _self);
-	struct LinkListItem * head = cast(LinkListItem, self->head);
-
+	struct LinkListItem * head = self->head;
+	struct LinkListItem * next = head;
 	
-	delete(head);
+	while (next != NULL)
+	{
+		struct LinkListItem * temp = next;
+		next = next->next;
+
+		delete(temp);
+	}
 
 	return self;
 }
 
 static void * LinkList_search(void * _self, void * _data)
 {
+	struct LinkList * self = cast(LinkList, _self);
+	struct LinkListItem * head = cast(LinkListItem, self->head);
+	struct LinkListItem * next;
+	struct Object * data;
 
+	if (head != NULL)
+	{
+		next = head;
+
+		while (next != NULL)
+		{
+			data = next->data;
+
+			if (equals(data, _data))
+			{
+				return next;
+			}
+		}
+	}
+
+	return NULL;
 }
 
 static bool LinkList_insert(void * _self, void * _data)
 {
+	struct LinkList * self = cast(LinkList, _self);
+	struct LinkListItem * head = cast(LinkListItem, self->head);
+	struct LinkListItem * newElement;
+	struct LinkListItem * next = head;
 
+	if (self != NULL)
+	{
+		newElement = new (LinkListItem, _data, 0);
+
+		if (head == NULL)
+		{
+			self->head = newElement;
+
+			newElement->prev = self->head;
+		}
+		else
+		{
+			next = head;
+			while (next->next != NULL)
+			{
+				next = next->next;
+			}
+
+			next->next = newElement;
+
+			newElement->prev = next;
+		}
+
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	
+	
 }
 
 static bool LinkList_delete(void * _self, void * _data)
 {
+	struct LinkList * self = cast(LinkList, _self);
+	struct LinkListItem * head = cast(LinkListItem, self->head);
+	struct LinkListItem * found = LinkList_search(_self, _data);
 
+	struct LinkListItem * prev;
+	struct LinkListItem * next;
+
+
+	if (found != NULL)
+	{	
+		
+		prev = found->prev;
+		next = found->next;
+
+		if (found == head)
+		{
+			self->head = next;
+		}
+
+		if (prev != NULL)
+		{
+			prev->next = next;
+		}
+
+		if (next != NULL)
+		{
+			next->prev = prev;
+		}
+
+		delete(found);
+	}
+	else
+	{
+		return true;
+	}
 }
 
 /*
@@ -98,17 +193,45 @@ void * listSearch(void * _self, void * _data)
 	const struct Object * self = cast(Object, _self);
 	const struct ListClass * class = cast(ListClass, self->class);
 
-	assert(class);
+	if (class)
+	{
+		return class->listSearch(_self, _data);
+	}
+	else
+	{
+		return NULL;
+	}
+
 }
 
 bool listInsert(void * _self, void * _data)
 {
+	const struct Object * self = cast(Object, _self);
+	const struct ListClass * class = cast(ListClass, self->class);
 
+	if (class)
+	{
+		return class->listInsert(_self, _data);
+	}
+	else
+	{
+		return false;
+	}
 }
 
 bool listDelete(void * _self, void * _data)
 {
+	const struct Object * self = cast(Object, _self);
+	const struct ListClass * class = cast(ListClass, self->class);
 
+	if (class)
+	{
+		return class->listDelete(_self, _data);
+	}
+	else
+	{
+		return false;
+	}
 }
 
 
