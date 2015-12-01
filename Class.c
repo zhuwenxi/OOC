@@ -9,6 +9,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <assert.h>
+#include <stdlib.h>
 
 
 void * Class_ctor(void * _self, va_list * args)
@@ -79,10 +80,19 @@ int Class_hash(const void * self)
 struct String * Class_toString(const void * _self)
 {
 	const struct Class * self = _self;
+	const char * postfix = " (class)";
+	size_t size = (strlen(self->name) + strlen(postfix) + 1) * sizeof(char);
+	char * text = (char *)calloc(size, sizeof(char));
+
+	strcat_s(text, size, self->name);
+	strcat_s(text, size, postfix);
 
 	if (self)
 	{
-		return new (String, self->name, strlen(self->name), 0);
+		void * retVal = new (String, text, size, 0);
+		free(text);
+
+		return retVal;
 	}
 	else
 	{

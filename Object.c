@@ -33,7 +33,7 @@ int Object_hash(const void * self)
 
 struct String * Object_toString(const void * _self)
 {
-	return new (String, "Object", 0);
+	return new (String, "Object (instance)", 0);
 }
 
 static const struct Class object[] =

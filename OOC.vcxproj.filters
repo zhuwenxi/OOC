@@ -94,6 +94,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\.gitignore" />
+    <None Include=".gitignore" />
   </ItemGroup>
 </Project>
