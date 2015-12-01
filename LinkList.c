@@ -9,6 +9,8 @@
 #include "Object_r.h"
 #include "Class.h"
 #include "New.h"
+#include "String.h"
+#include "String_r.h"
 
 /*
  * LinkList:
@@ -134,6 +136,56 @@ static bool LinkList_delete(void * _self, void * _data)
 	}
 }
 
+static struct String * LinkList_toString(const void * self)
+{
+	const struct LinkList * list = cast(LinkList, self);
+	const struct LinkListItem * head;
+	const struct LinkListItem * next;
+	struct String * retVal = new (String, "LinkList: ", 0);
+
+	struct String * temp;
+	struct String * space;
+	struct String * property;
+	
+	if (list)
+	{
+		head = cast(LinkListItem, list->head);
+
+		if (head)
+		{
+			next = head;
+
+			while (next)
+			{
+				temp = retVal;
+				space = new (String, " ", 0);
+				property = toString(next->data);
+
+				if (property)
+				{ 
+					retVal = add(retVal, property, space, 0);
+				}
+				
+				delete(property);
+				delete(temp);
+				delete(space);
+
+				next = next->next;
+			}
+
+			return retVal;
+		}
+		else
+		{
+			return new (String, "Empty", 0);
+		}
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
 /*
  * LinkListItem:
  */
@@ -166,7 +218,7 @@ void loadLinkList()
 {
 	if (!LinkList)
 	{
-		LinkList = new (List, "LinkList", Object, sizeof(struct LinkList), dtor, LinkList_dtor, search, LinkList_search, insert, LinkList_insert, erase, LinkList_delete, 0);
+		LinkList = new (List, "LinkList", Object, sizeof(struct LinkList), dtor, LinkList_dtor, search, LinkList_search, insert, LinkList_insert, erase, LinkList_delete, toString, LinkList_toString,0);
 	}
 
 	if (!LinkListItem)

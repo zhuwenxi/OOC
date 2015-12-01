@@ -9,6 +9,47 @@
 #include "Object_r.h"
 #include "Class.h"
 
+
+
+
+void * add(const void * _one, const void * _another, ...)
+{
+	struct String * one = cast(String, _one);
+	struct String * another = cast(String, _another);
+	struct String * next;
+	size_t size;
+	char * target;
+	va_list args;
+
+	if (one && another)
+	{
+		size = strlen(one->text) + strlen(another->text) + 1;
+		target = (char *)calloc(size, sizeof(char));
+
+		strcat_s(target, size, one->text);
+		strcat_s(target, size, another->text);
+
+		va_start(args, _another);
+
+		while ((next = va_arg(args, struct String *)) != 0)
+		{
+			size = strlen(target) + strlen(next->text) + 1;
+			target = (char *)realloc(target, size * sizeof(char));
+
+			strcat_s(target, size, next->text);
+		}
+
+		va_end(args);
+
+
+		return new (String, target, 0);
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
 static void * String_ctor(void * _self, va_list * args)
 {
 	struct String * self = super_ctor(Object, _self, args);
@@ -55,13 +96,17 @@ static void * String_dtor(void * _self)
 	return self;
 }
 
-void printString(void * _string)
+static struct String * String_toString(const void * _self)
 {
-	struct String * string = _string;
+	struct String * self = cast(String, _self);
 
-	if (string != NULL)
+	if (self)
 	{
-		printf("%s\n", string->text);
+		return new (String, self->text, strlen(self->text), 0);
+	}
+	else
+	{
+		return NULL;
 	}
 }
 
@@ -72,6 +117,6 @@ void loadString()
 {
 	if (!String)
 	{
-		String = new (Class, "String", Object, sizeof(struct String), ctor, String_ctor, dtor, String_dtor);
+		String = new (Class, "String", Object, sizeof(struct String), ctor, String_ctor, dtor, String_dtor, toString, String_toString);
 	}
 }

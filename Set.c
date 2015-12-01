@@ -8,65 +8,16 @@
 #include "Object.h"
 #include "Class.h"
 #include "Class_r.h"
+#include "List.h"
+#include "List_r.h"
+#include "String.h"
+#include "String_r.h"
+#include "New.h"
+
+
+
 
 #define DEFAULT_SET_SIZE 10
-
-void * add(void * _self, void * _setItem)
-{
-	struct Set * self = cast(Set, _self);
-	struct SetClass * sc =  * (struct SetClass **)self;
-	int originCapcity;
-	int i;
-
-	if (self != NULL)
-	{
-		self->length++;
-
-		if (self->length > self->capacity)
-		{
-			originCapcity = self->capacity;
-			self->capacity *= 2;
-			
-			self->items = realloc(self->items, self->capacity * sizeof(void *));
-
-			for (i = originCapcity; i < self->capacity; i++)
-			{
-				self->items[i] = NULL;
-			}
-
-		}
-		
-		self->items[self->length - 1] = _setItem;
-
-		return _setItem;
-	}
-	else
-	{
-		return NULL;
-	}
-}
-
-static void * SetClass_ctor(void * _self, va_list * args)
-{
-	struct SetClass * self = _self;
-	va_list arg = *args;
-	typedef void * (*voidf)();
-	voidf selector;
-
-	super_ctor(SetClass, _self, args);
-
-	while ((selector = va_arg(arg, voidf)) != 0)
-	{
-		voidf method = va_arg(arg, voidf);
-		
-		if (selector == add)
-		{
-			self->add = method;
-		}
-	}
-
-	return self;
-}
 
 static void * Set_ctor(void * _self, va_list * args)
 {
@@ -101,9 +52,78 @@ static void * Set_dtor(void * _self)
 	return self;
 }
 
-const void * Set;
+static void * Set_insert(void * _self, void * _setItem)
+{
+	struct Set * self = cast(Set, _self);
+	struct SetClass * sc =  * (struct SetClass **)self;
+	int originCapcity;
+	int i;
 
-const void * SetClass;
+	if (self != NULL)
+	{
+		self->length++;
+
+		if (self->length > self->capacity)
+		{
+			originCapcity = self->capacity;
+			self->capacity *= 2;
+			
+			self->items = realloc(self->items, self->capacity * sizeof(void *));
+
+			for (i = originCapcity; i < self->capacity; i++)
+			{
+				self->items[i] = NULL;
+			}
+
+		}
+		
+		self->items[self->length - 1] = _setItem;
+
+		return _setItem;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+static struct String * Set_toString(const void * _self)
+{
+	const struct Set * self = cast(Set, _self);
+	const struct String * retVal = new (String, "Set:", 0);
+	struct String * child;
+	struct String * space;
+	struct String * temp;
+	int i;
+
+	if (self)
+	{
+		for (i = 0; i < self->length; i++)
+		{
+			child = toString(self->items[i]);
+			temp = retVal;
+			space = new (String, " ", 0);
+
+			if (child)
+			{
+				retVal = add(retVal, child, space, 0);
+			}
+			
+			delete(temp);
+			delete(child);
+			delete(space);
+		}
+
+		return retVal;
+	}
+	else
+	{
+		return NULL;
+	}
+	
+}
+
+const void * Set;
 
 void loadSet()
 {
@@ -114,6 +134,6 @@ void loadSet()
 
 	if (!Set)
 	{
-		Set = new (Class, "Set", Object, sizeof(struct Set), ctor, Set_ctor, dtor, Set_dtor, 0);
+		Set = new (List, "Set", Object, sizeof(struct Set), ctor, Set_ctor, dtor, Set_dtor, insert, Set_insert, toString, Set_toString, 0);
 	}
 }

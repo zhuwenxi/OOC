@@ -3,6 +3,8 @@
 
 extern const void * String;
 
+void * add(const void * one, const void * another, ...);
+
 void loadString();
 
 #endif

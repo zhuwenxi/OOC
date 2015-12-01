@@ -9,6 +9,7 @@
 #include "LinkList.h"
 #include "LinkList_r.h"
 #include "String.h"
+#include "Set.h"
 
 
 
@@ -17,6 +18,16 @@ int main()
 {	
 	loadOoc();
 
+	void * set = new (Set, 0);
+
+	insert(set, new(String, "Apple"));
+	insert(set, new(String, "Banana"));
+	insert(set, new(String, "Cat"));
+
+	printf("%s\n", toString(set)->text);
+
+	delete(set);
+
 	void * linkList = new(LinkList, 0);
 
 	void * str1 = new (String, "Apple", 0);
@@ -24,8 +35,20 @@ int main()
 	void * str3 = new (String, "Cat", 0);
 
 	insert(linkList, str1);
+	printf("%s\n", toString(linkList)->text);
 	insert(linkList, str2);
+	printf("%s\n", toString(linkList)->text);
 	insert(linkList, str3);
+	printf("%s\n", toString(linkList)->text);
+
+	erase(linkList, str2);
+	printf("%s\n", toString(linkList)->text);
+
+	erase(linkList, str3);
+	printf("%s\n", toString(linkList)->text);
+
+	erase(linkList, str1);
+	printf("%s\n", toString(linkList)->text);
 
 	delete(linkList);
 
