@@ -58,7 +58,7 @@ const void * Point;
 
 const void * PointClass;
 
-void initPoint()
+void loadPoint()
 {
 	if (!PointClass)
 	{

@@ -7,6 +7,6 @@ extern const void * PointClass;
 
 void draw(const void * self);
 
-void initPoint();
+void loadPoint();
 
 #endif

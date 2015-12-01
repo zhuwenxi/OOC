@@ -3,6 +3,8 @@
 #include "Object.h"
 #include "Object_r.h"
 #include "Log.h"
+#include "String.h"
+#include "String_r.h"
 
 #include <stdarg.h>
 #include <string.h>
@@ -45,7 +47,11 @@ void * Class_ctor(void * _self, va_list * args)
 		}
 		else if (selector == equals)
 		{
-			self->equals = equals;
+			self->equals = method;
+		}
+		else if (selector == toString)
+		{
+			self->toString = method;
 		}
 	}
 
@@ -68,6 +74,20 @@ int Class_hash(const void * self)
 {
 	log("Class_hash()\n");
 	return 0;
+}
+
+struct String * Class_toString(const void * _self)
+{
+	const struct Class * self = _self;
+
+	if (self)
+	{
+		return new (String, self->name, strlen(self->name), 0);
+	}
+	else
+	{
+		return NULL;
+	}
 }
 
 size_t sizeOf(const void * _class)

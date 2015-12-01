@@ -66,23 +66,34 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Class.c" />
+    <ClCompile Include="LinkList.c" />
     <ClCompile Include="Log.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="New.c" />
     <ClCompile Include="Object.c" />
+    <ClCompile Include="OOC.c" />
     <ClCompile Include="Point.c" />
+    <ClCompile Include="Set.c" />
+    <ClCompile Include="String.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h" />
     <ClInclude Include="Class_r.h" />
+    <ClInclude Include="LinkList.h" />
+    <ClInclude Include="LinkList_r.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="New.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Object_r.h">
       <FileType>Document</FileType>
     </ClInclude>
+    <ClInclude Include="OOC.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Point_r.h" />
+    <ClInclude Include="Set.h" />
+    <ClInclude Include="Set_r.h" />
+    <ClInclude Include="String.h" />
+    <ClInclude Include="String_r.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />

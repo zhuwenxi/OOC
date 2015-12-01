@@ -5,6 +5,7 @@
 
 void loadOoc()
 {
+	loadPoint();
 	loadString();
 	loadSet();
 	loadLinkList();

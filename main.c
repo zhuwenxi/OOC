@@ -5,23 +5,23 @@
 #include "Class.h"
 #include "Point.h"
 #include "Point_r.h"
-
-void * test_ctor(void * self, va_list *args)
-{
-	printf("test_ctor\n");
-	return self;
-}
+#include "OOC.h"
 
 int main()
 {	
-	set_debug_tag(false);
-	initPoint();
+	loadOoc();
 
-	struct Point * point = new (Point, 1, 2);
+	void * obj = new (Object, 0);
+
+	printf("%s\n", toString(PointClass)->text);
+
+	delete(obj);
+
+	/*struct Point * point = new (Point, 1, 2);
 
 	draw(point);
 
-	delete(point);	
+	delete(point);*/
 
 
 	/*

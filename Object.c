@@ -3,6 +3,7 @@
 #include "Class_r.h"
 #include "Object_r.h"
 #include "Log.h"
+#include "String.h"
 
 #include <assert.h>
 
@@ -30,6 +31,11 @@ int Object_hash(const void * self)
 	return 0;
 }
 
+struct String * Object_toString(const void * _self)
+{
+	return new (String, "Object", 0);
+}
+
 static const struct Class object[] =
 {
 	{
@@ -41,6 +47,7 @@ static const struct Class object[] =
 		Object_dtor,
 		Object_equals,
 		Object_hash,
+		Object_toString,
 	},
 	{
 		{ object + 1 },
@@ -51,6 +58,7 @@ static const struct Class object[] =
 		Class_dtor,
 		Class_equals,
 		Class_hash,
+		Class_toString,
 	}
 };
 
@@ -67,6 +75,20 @@ int hash(const void * self)
 {
 	log("hash()\n");
 	return 0;
+}
+
+struct String * toString(const void * _self)
+{
+	struct Object * self = cast(Object, _self);
+
+	if (self)
+	{
+		return self->class->toString(_self);
+	}
+	else
+	{
+		return NULL;
+	}
 }
 
 struct Class * super(const void * _self)

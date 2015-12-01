@@ -33,6 +33,18 @@
     <ClCompile Include="Point.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OOC.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Set.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="String.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkList.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object_r.h">
@@ -57,6 +69,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Point_r.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkList_r.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Set.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Set_r.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="String.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="String_r.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OOC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
