@@ -1,28 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "OOC.h"
 #include "Object.h"
 #include "Class.h"
 #include "Point.h"
 #include "Point_r.h"
-#include "OOC.h"
+#include "LinkList.h"
+#include "LinkList_r.h"
+#include "String.h"
+
+
+
 
 int main()
 {	
 	loadOoc();
 
-	void * obj = new (Object, 0);
+	void * linkList = new(LinkList, 0);
 
-	printf("%s\n", toString(PointClass)->text);
+	void * str1 = new (String, "Apple", 0);
+	void * str2 = new (String, "Banana", 0);
+	void * str3 = new (String, "Cat", 0);
 
-	delete(obj);
+	insert(linkList, str1);
+	insert(linkList, str2);
+	insert(linkList, str3);
 
-	/*struct Point * point = new (Point, 1, 2);
-
-	draw(point);
-
-	delete(point);*/
-
+	delete(linkList);
 
 	/*
 	 * Pause here, to display the command-line output.
