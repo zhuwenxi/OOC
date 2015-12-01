@@ -47,6 +47,8 @@ static void * LinkList_search(void * _self, void * _data)
 			{
 				return next;
 			}
+
+			next = next->next;
 		}
 	}
 
@@ -67,8 +69,6 @@ static bool LinkList_insert(void * _self, void * _data)
 		if (head == NULL)
 		{
 			self->head = newElement;
-
-			newElement->prev = self->head;
 		}
 		else
 		{
