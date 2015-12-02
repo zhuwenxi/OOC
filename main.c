@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "OOC.h"
+#include "New.h"
 #include "Object.h"
 #include "Class.h"
 #include "Point.h"
@@ -10,6 +11,7 @@
 #include "LinkList_r.h"
 #include "String.h"
 #include "Set.h"
+#include "HashTable.h"
 
 
 
@@ -18,7 +20,11 @@ int main()
 {	
 	loadOoc();
 
-	void * set = new (Set, 0);
+	void * hashTable = new (HashTable, 0);
+
+	delete(hashTable);
+	
+	/*void * set = new (Set, 0);
 
 	insert(set, new(String, "Apple"));
 	insert(set, new(String, "Banana"));
@@ -50,7 +56,7 @@ int main()
 	erase(linkList, str1);
 	printf("%s\n", toString(linkList)->text);
 
-	delete(linkList);
+	delete(linkList);*/
 
 	/*
 	 * Pause here, to display the command-line output.

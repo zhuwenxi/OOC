@@ -7,7 +7,7 @@
 struct HashTable
 {
 	struct Object _;
-	struct LinkList * slots;
+	struct LinkList ** slots;
 };
 
 #endif
