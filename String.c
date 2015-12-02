@@ -96,6 +96,26 @@ static void * String_dtor(void * _self)
 	return self;
 }
 
+static int String_hash(const void * _self)
+{
+	struct String * self = cast(String, _self);
+	size_t size;
+	int i;
+	int hashCode = 0;
+
+	if (self)
+	{
+		size = strlen(self->text);
+
+		for (i = 0; i < size; i++)
+		{
+			hashCode = 128 * hashCode + self->text[i];
+		}
+	}
+	
+	return hashCode;
+}
+
 static struct String * String_toString(const void * _self)
 {
 	struct String * self = cast(String, _self);
@@ -117,6 +137,6 @@ void loadString()
 {
 	if (!String)
 	{
-		String = new (Class, "String", Object, sizeof(struct String), ctor, String_ctor, dtor, String_dtor, toString, String_toString);
+		String = new (Class, "String", Object, sizeof(struct String), ctor, String_ctor, dtor, String_dtor, toString, String_toString, hash, String_hash,0);
 	}
 }

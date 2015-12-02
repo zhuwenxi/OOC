@@ -141,7 +141,7 @@ static struct String * LinkList_toString(const void * self)
 	const struct LinkList * list = cast(LinkList, self);
 	const struct LinkListItem * head;
 	const struct LinkListItem * next;
-	struct String * retVal = new (String, "LinkList: ", 0);
+	struct String * retVal;
 
 	struct String * temp;
 	struct String * space;
@@ -155,8 +155,11 @@ static struct String * LinkList_toString(const void * self)
 		{
 			next = head;
 
+			retVal = new (String, "", 0);
+
 			while (next)
 			{
+				
 				temp = retVal;
 				space = new (String, " ", 0);
 				property = toString(next->data);
@@ -177,7 +180,7 @@ static struct String * LinkList_toString(const void * self)
 		}
 		else
 		{
-			return new (String, "Empty", 0);
+			return NULL;
 		}
 	}
 	else

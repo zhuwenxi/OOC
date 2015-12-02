@@ -22,6 +22,12 @@ int main()
 
 	void * hashTable = new (HashTable, 0);
 
+	insert(hashTable, new (String, "Apple", 0));
+	insert(hashTable, new (String, "Banana", 0));
+	insert(hashTable, new (String, "Cat", 0));
+
+	printf("%s\n", toString(hashTable)->text);
+
 	delete(hashTable);
 	
 	/*void * set = new (Set, 0);
@@ -54,7 +60,6 @@ int main()
 	printf("%s\n", toString(linkList)->text);
 
 	erase(linkList, str1);
-	printf("%s\n", toString(linkList)->text);
 
 	delete(linkList);*/
 

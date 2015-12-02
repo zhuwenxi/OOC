@@ -71,10 +71,16 @@ bool equals(const void * self, const void * another)
 	return self == another;
 }
 
-int hash(const void * self)
+int hash(const void * _self)
 {
 	log("hash()\n");
-	return 0;
+	
+	struct Object * self = cast(Object, _self);
+	struct Class * class = cast(Class, self->class);
+
+	assert(self && class);
+
+	return class->hash(_self);
 }
 
 struct String * toString(const void * _self)

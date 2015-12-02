@@ -10,6 +10,8 @@
 #include "List_r.h"
 #include "Object.h"
 #include "Object_r.h"
+#include "String.h"
+#include "String_r.h"
 
 
 
@@ -93,6 +95,53 @@ static bool HashTable_erase(void * _self, void * _data)
 	}
 }
 
+static struct String * HashTable_toString(const void * _self)
+{
+	struct HashTable * self = cast(HashTable, _self);
+	struct LinkList ** slots;
+	struct String * slotString;
+	struct String * retVal;
+	struct String * prevRetVal;
+	struct String * lineFeed = new (String, "\n", 0);
+	int i;
+
+	if (self)
+	{
+		slots = self->slots;
+
+		if (slots)
+		{
+			retVal = new (String, "", 0);
+
+			for (i = 0; i < DEFAULT_HASH_TABLE_SIZE; i++)
+			{
+				slotString = toString(slots[i]);
+
+				prevRetVal = retVal;
+
+				if (slotString)
+				{
+					retVal = add(retVal, slotString, lineFeed, 0);
+					delete(prevRetVal);
+				}
+
+			}
+
+			delete(lineFeed);
+
+			return retVal;
+		}
+		else
+		{
+			return NULL;
+		}
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
 static struct LinkList * selectSlot(void * _self, void * _data)
 {
 	struct HashTable * self = cast(HashTable, _self);
@@ -113,12 +162,14 @@ static struct LinkList * selectSlot(void * _self, void * _data)
 	return slot;
 }
 
+
+
 const void * HashTable;
 
 void loadHashTable()
 {
 	if (!HashTable)
 	{
-		HashTable = new (List, "HashTable", Object, sizeof(struct HashTable), ctor, HashTable_ctor, dtor, HashTable_dtor, search, HashTable_search, insert, HashTable_search, erase, HashTable_erase, 0);
+		HashTable = new (List, "HashTable", Object, sizeof(struct HashTable), ctor, HashTable_ctor, dtor, HashTable_dtor, search, HashTable_search, insert, HashTable_insert, erase, HashTable_erase, toString, HashTable_toString, 0);
 	}
 }
