@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <assert.h>
 
 #include "List.h"
 #include "List_r.h"

@@ -90,7 +90,7 @@ static void * Set_insert(void * _self, void * _setItem)
 static struct String * Set_toString(const void * _self)
 {
 	const struct Set * self = cast(Set, _self);
-	const struct String * retVal = new (String, "Set:", 0);
+	const struct String * retVal = new (String, "", 0);
 	struct String * child;
 	struct String * space;
 	struct String * temp;
