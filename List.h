@@ -15,6 +15,9 @@ bool insert(void * _self, void * _data);
 
 bool erase(void * _self, void * _data);
 
+bool insertAt(void * _self , void * _data, int index);
+
+
 void loadList();
 
 #endif

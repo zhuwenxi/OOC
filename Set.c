@@ -19,6 +19,8 @@
 
 #define DEFAULT_SET_SIZE 10
 
+static void resizeCapacity(struct Set * set);
+
 static void * Set_ctor(void * _self, va_list * args)
 {
 	struct Set * self = _self;
@@ -55,15 +57,14 @@ static void * Set_dtor(void * _self)
 static void * Set_insert(void * _self, void * _setItem)
 {
 	struct Set * self = cast(Set, _self);
-	struct SetClass * sc =  * (struct SetClass **)self;
-	int originCapcity;
-	int i;
+	// int originCapcity;
+	// int i;
 
 	if (self != NULL)
 	{
 		self->length++;
 
-		if (self->length > self->capacity)
+		/*if (self->length > self->capacity)
 		{
 			originCapcity = self->capacity;
 			self->capacity *= 2;
@@ -75,7 +76,8 @@ static void * Set_insert(void * _self, void * _setItem)
 				self->items[i] = NULL;
 			}
 
-		}
+		}*/
+		resizeCapacity(self);
 		
 		self->items[self->length - 1] = _setItem;
 
@@ -84,6 +86,30 @@ static void * Set_insert(void * _self, void * _setItem)
 	else
 	{
 		return NULL;
+	}
+}
+
+static bool Set_insertAt(void * _self, void * _data, int index)
+{
+	struct Set * self = cast(Set, _self);
+	int i;
+
+	if (self && index >= 0 && index <= self->length)
+	{
+		Set_insert(_self, NULL);
+
+		for (i = self->length - 1; i > index; i--)
+		{
+			self->items[i] = self->items[i - 1];
+		}
+
+		self->items[index] = _data;
+
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
@@ -123,17 +149,35 @@ static struct String * Set_toString(const void * _self)
 	
 }
 
+static void resizeCapacity(struct Set * set)
+{
+	int capacity = set->capacity;
+	int i;
+
+	if (set->length > set->capacity)
+	{
+		do
+		{
+			set->capacity = set->capacity * 2;
+		} 
+		while (set->length > set->capacity);
+		
+
+		set->items = realloc(set->items, set->capacity * sizeof(void *));
+
+		for (i = capacity; i < set->capacity; i++)
+		{
+			set->items[i] = NULL;
+		}
+	}
+}
+
 const void * Set;
 
 void loadSet()
 {
-	/*if (!SetClass)
-	{
-		SetClass = new (Class, "SetClass", Class, sizeof(struct SetClass), ctor, SetClass_ctor, 0);
-	}*/
-
 	if (!Set)
 	{
-		Set = new (List, "Set", Object, sizeof(struct Set), ctor, Set_ctor, dtor, Set_dtor, insert, Set_insert, toString, Set_toString, 0);
+		Set = new (List, "Set", Object, sizeof(struct Set), ctor, Set_ctor, dtor, Set_dtor, insert, Set_insert, insertAt, Set_insertAt, toString, Set_toString, 0);
 	}
 }

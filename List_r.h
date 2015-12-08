@@ -10,6 +10,7 @@ struct List
 	void * (*listSearch)(void * _list, void * _data);
 	bool(*listInsert)(void * _list, void * _data);
 	bool(*listDelete)(void * _list, void * _data);
+	bool(*insertAt)(void * _list, void * _data, int index);
 };
 
 #endif
