@@ -17,7 +17,7 @@ const void * IteratorClass;
 
 
 
-struct Object * start(const struct Iterator * iter)
+struct Iterator * start(const struct Iterator * iter)
 {
 	struct IteratorClass * class = classOf(iter);
 
@@ -31,7 +31,7 @@ struct Object * start(const struct Iterator * iter)
 	}
 }
 
-struct Object * end(const struct Iterator * iter)
+struct Iterator * end(const struct Iterator * iter)
 {
 	struct IteratorClass * class = classOf(iter);
 
@@ -45,7 +45,7 @@ struct Object * end(const struct Iterator * iter)
 	}
 }
 
-struct Object * next(const struct Iterator * iter)
+struct Iterator * next(const struct Iterator * iter)
 {
 	struct IteratorClass * class = classOf(iter);
 

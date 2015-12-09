@@ -13,6 +13,8 @@
 #include "String.h"
 #include "String_r.h"
 #include "New.h"
+#include "Iterator.h"
+#include "Iterator_r.h"
 
 
 
@@ -57,26 +59,11 @@ static void * Set_dtor(void * _self)
 static void * Set_insert(void * _self, void * _setItem)
 {
 	struct Set * self = cast(Set, _self);
-	// int originCapcity;
-	// int i;
 
 	if (self != NULL)
 	{
 		self->length++;
 
-		/*if (self->length > self->capacity)
-		{
-			originCapcity = self->capacity;
-			self->capacity *= 2;
-			
-			self->items = realloc(self->items, self->capacity * sizeof(void *));
-
-			for (i = originCapcity; i < self->capacity; i++)
-			{
-				self->items[i] = NULL;
-			}
-
-		}*/
 		resizeCapacity(self);
 		
 		self->items[self->length - 1] = _setItem;
@@ -111,6 +98,31 @@ static bool Set_insertAt(void * _self, void * _data, int index)
 	{
 		return false;
 	}
+}
+
+static struct Iterator * Set_start(struct Iterator * iter)
+{
+	iter->index = 0;
+
+	return iter;
+}
+
+static struct Object * Set_end(struct Iterator * iter)
+{
+	const struct Set * set = iter->data;
+
+	assert(set);
+
+	iter->index = set->length;
+
+	return iter;
+}
+
+static struct Object * Set_next(struct Iterator * iter)
+{
+	iter->index = iter->index + 1;
+
+	return iter;
 }
 
 static struct String * Set_toString(const void * _self)
@@ -149,6 +161,16 @@ static struct String * Set_toString(const void * _self)
 	
 }
 
+static void * SetIterator_ctor(void * _self, va_list * args)
+{
+	return super_ctor(SetIterator, _self, args);
+}
+
+static void * SetIterator_dtor(void * _self)
+{
+	return super_dtor(SetIterator, _self);
+}
+
 static void resizeCapacity(struct Set * set)
 {
 	int capacity = set->capacity;
@@ -174,10 +196,17 @@ static void resizeCapacity(struct Set * set)
 
 const void * Set;
 
+const void * SetIterator;
+
 void loadSet()
 {
 	if (!Set)
 	{
 		Set = new (List, "Set", Object, sizeof(struct Set), ctor, Set_ctor, dtor, Set_dtor, insert, Set_insert, insertAt, Set_insertAt, toString, Set_toString, 0);
+	}
+
+	if (!SetIterator)
+	{
+		SetIterator = new (IteratorClass, "SetIterator", Iterator, sizeof(struct SetIterator), start, Set_start, end, Set_end, next, Set_next,0);
 	}
 }

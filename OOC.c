@@ -6,11 +6,12 @@
 
 void loadOoc()
 {
+	loadIterator();
 	loadPoint();
 	loadString();
 	loadList();
 	loadSet();
 	loadLinkList();
 	loadHashTable();
-	loadIterator();
+	
 }

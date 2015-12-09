@@ -2,10 +2,11 @@
 #define __SET_H__
 
 #include "List.h"
+#include "Iterator.h"
 
 extern const void * Set;
 
-const void * SetItem;
+extern const void * SetIterator;
 
 void loadSet();
 

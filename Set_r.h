@@ -3,6 +3,7 @@
 
 #include "Object_r.h"
 #include "Class_r.h"
+#include "Iterator_r.h"
 
 struct Set
 {
@@ -12,16 +13,9 @@ struct Set
 	int capacity;
 };
 
-struct SetClass
+struct SetIterator
 {
-	struct Class _;
-	void * (*add)(void * self, void * item);
+	struct Iterator _;
 };
-
-//struct SetItem
-//{
-//	struct Object _;
-//	void * data;
-//};
 
 #endif
