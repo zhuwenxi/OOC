@@ -5,6 +5,7 @@
 
 
 #include "Object_r.h"
+#include "Class_r.h"
 
 struct Iterator
 {

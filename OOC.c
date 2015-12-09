@@ -2,6 +2,7 @@
 #include "String.h"
 #include "Set.h"
 #include "LinkList.h"
+#include "Iterator.h"
 
 void loadOoc()
 {
@@ -11,4 +12,5 @@ void loadOoc()
 	loadSet();
 	loadLinkList();
 	loadHashTable();
+	loadIterator();
 }
