@@ -116,6 +116,21 @@ static int String_hash(const void * _self)
 	return hashCode;
 }
 
+static bool String_equals(const void * _self, const void * _another)
+{
+	struct String * self = cast(String, _self);
+	struct String * another = cast(String, _another);
+
+	return self && another && !strcmp(self->text, another->text);
+}
+
+static void * String_clone(const void * _self)
+{
+	struct String * self = cast(String, _self);
+
+	return new (String, self->text, 0);
+}
+
 static struct String * String_toString(const void * _self)
 {
 	struct String * self = cast(String, _self);
@@ -137,6 +152,6 @@ void loadString()
 {
 	if (!String)
 	{
-		String = new (Class, "String", Object, sizeof(struct String), ctor, String_ctor, dtor, String_dtor, toString, String_toString, hash, String_hash,0);
+		String = new (Class, "String", Object, sizeof(struct String), ctor, String_ctor, dtor, String_dtor, toString, String_toString, hash, String_hash, equals, String_equals, clone, String_clone, 0);
 	}
 }

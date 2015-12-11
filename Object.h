@@ -8,6 +8,7 @@ extern const void * const Object;
 
 bool equals(const void * self, const void * another);
 int hash(const void * self);
+void * clone(const void * self);
 struct String * toString(const void * self);
 /*
  * Dynamic Type Checking:

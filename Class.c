@@ -54,6 +54,10 @@ void * Class_ctor(void * _self, va_list * args)
 		{
 			self->toString = method;
 		}
+		else if (selector == clone)
+		{
+			self->clone = method;
+		}
 	}
 
 	return self;
@@ -75,6 +79,11 @@ int Class_hash(const void * self)
 {
 	log("Class_hash()\n");
 	return 0;
+}
+
+void * Class_clone(const void * self)
+{
+	return new (Class, "Class", Object, sizeof(struct Class), 0);
 }
 
 struct String * Class_toString(const void * _self)

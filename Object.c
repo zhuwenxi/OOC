@@ -31,6 +31,11 @@ int Object_hash(const void * self)
 	return 0;
 }
 
+void * Object_clone(const void * self)
+{
+	return new (Object, 0);
+}
+
 struct String * Object_toString(const void * _self)
 {
 	return new (String, "Object (instance)", 0);
@@ -47,6 +52,7 @@ static const struct Class object[] =
 		Object_dtor,
 		Object_equals,
 		Object_hash,
+		Object_clone,
 		Object_toString,
 	},
 	{
@@ -58,6 +64,7 @@ static const struct Class object[] =
 		Class_dtor,
 		Class_equals,
 		Class_hash,
+		Class_ctor,
 		Class_toString,
 	}
 };
@@ -68,7 +75,10 @@ const void * const Class = object + 1;
 bool equals(const void * self, const void * another)
 {
 	log("equals()\n");
-	return self == another;
+
+	struct Class * class = classOf(self);
+
+	return class->equals(self, another);
 }
 
 int hash(const void * _self)
@@ -81,6 +91,13 @@ int hash(const void * _self)
 	assert(self && class);
 
 	return class->hash(_self);
+}
+
+void * clone(const void * self)
+{
+	struct Class * class = classOf(self);
+
+	return class->clone(self);
 }
 
 struct String * toString(const void * _self)

@@ -100,6 +100,58 @@ static bool Set_insertAt(void * _self, void * _data, int index)
 	}
 }
 
+static void * Set_search(void * _self, void * _data)
+{
+	struct Set * self = cast(Set, _self);
+	struct Iterator * iterator;
+	void * data;
+
+	if (self)
+	{
+		iterator = new (SetIterator, self, 0);
+
+		for (data = start(iterator); data != end(iterator); data = next(iterator))
+		{
+			if (equals(data, _data))
+			{
+				delete(iterator);
+
+				return data;
+			}
+		}
+
+		delete(iterator);
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+static void Set_merge(void * _self, void * _another, ...)
+{
+	struct Set * self = cast(Set, _self);
+	struct Set * another = cast(Set, _another);
+	struct SetIterator * iter;
+	void * data;
+	
+
+	if (self && another)
+	{
+		iter = new (SetIterator, another);
+
+		for (data = start(iter); data != end(iter); data = next(iter))
+		{
+			if (!search(self, data))
+			{
+				insert(self, clone(data));
+			}
+			
+		}
+	}
+
+}
+
 static struct Object * Set_start(struct Iterator * iter)
 {
 	struct Set * set = iter->data;
@@ -206,7 +258,7 @@ void loadSet()
 {
 	if (!Set)
 	{
-		Set = new (List, "Set", Object, sizeof(struct Set), ctor, Set_ctor, dtor, Set_dtor, insert, Set_insert, insertAt, Set_insertAt, toString, Set_toString, 0);
+		Set = new (List, "Set", Object, sizeof(struct Set), ctor, Set_ctor, dtor, Set_dtor, insert, Set_insert, insertAt, Set_insertAt, toString, Set_toString, search, Set_search, merge, Set_merge, 0);
 	}
 
 	if (!SetIterator)

@@ -18,6 +18,7 @@ struct Class
 	void * (*dtor)(void *self);
 	bool (*equals)(const void * self, const void * another);
 	int (*hash)(const void * self);
+	void * (*clone)(const void * self);
 	struct String * (*toString)(const void * self);
 };
 

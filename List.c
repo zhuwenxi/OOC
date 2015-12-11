@@ -71,6 +71,21 @@ bool insertAt(void * _self, void * _data, int index)
 	}
 }
 
+void merge(void * _self, void * _another)
+{
+	const struct Object * self = cast(Object, _self);
+	const struct List * class = cast(List, self->class);
+
+	if (class)
+	{
+		return class->merge(_self, _another);
+	}
+	else
+	{
+		return false;
+	}
+}
+
 static void * List_ctor(void * _self, va_list * _args)
 {
 	struct List * self = super_ctor(List, _self, _args);
@@ -97,6 +112,10 @@ static void * List_ctor(void * _self, va_list * _args)
 		else if (selector == insertAt)
 		{
 			self->insertAt = method;
+		}
+		else if (selector == merge)
+		{
+			self->merge = method;
 		}
 	}
 

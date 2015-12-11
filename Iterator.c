@@ -113,11 +113,6 @@ static void * Iterator_ctor(const void * _self, va_list * args)
 
 static void * Iterator_dtor(const void * _self)
 {
-	struct Iterator * self = cast(Iterator, _self);
-	void * data = self->data;
-
-	delete(data);
-
 	return _self;
 }
 
