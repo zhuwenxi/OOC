@@ -14,10 +14,10 @@ extern const void * IteratorClass;
 void loadIterator();
 
 
-struct Iterator * start(struct Iterator * iter);
+struct Object * start(struct Iterator * iter);
 
-struct Iterator * end(struct Iterator * iter);
+struct Object * end(struct Iterator * iter);
 
-struct Iterator * next(struct Iterator * iter);
+struct Object * next(struct Iterator * iter);
 
 #endif

@@ -100,29 +100,33 @@ static bool Set_insertAt(void * _self, void * _data, int index)
 	}
 }
 
-static struct Iterator * Set_start(struct Iterator * iter)
+static struct Object * Set_start(struct Iterator * iter)
 {
-	iter->index = 0;
+	struct Set * set = iter->data;
 
-	return iter;
+	assert(set);
+
+	return set->items[0];
 }
 
 static struct Object * Set_end(struct Iterator * iter)
 {
-	const struct Set * set = iter->data;
+	struct Set * set = iter->data;
 
 	assert(set);
 
-	iter->index = set->length;
-
-	return iter;
+	return set->items[set->length];
 }
 
 static struct Object * Set_next(struct Iterator * iter)
 {
+	struct Set * set = iter->data;
+
+	assert(set);
+
 	iter->index = iter->index + 1;
 
-	return iter;
+	return set->items[iter->index];
 }
 
 static struct String * Set_toString(const void * _self)
