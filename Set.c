@@ -56,6 +56,69 @@ static void * Set_dtor(void * _self)
 	return self;
 }
 
+static struct Set * Set_clone(const struct Set * _self)
+{
+	struct Set * self = cast(Set, _self);
+	struct Set * copy;
+
+	if (self)
+	{
+		copy = new (Set, 0);
+		
+		struct SetIterator * iter = new (SetIterator, self, 0);
+		void * data;
+
+		for (data = start(iter); data != end(iter); data = next(iter))
+		{
+			insert(copy, clone(data));
+		}
+
+		delete(iter);
+
+		return copy;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+static bool Set_equals(const void * _self, const void * _another)
+{
+	struct Set * self = cast(Set, _self);
+	struct Set * another = cast(Set, _another);
+
+	if (self && another)
+	{
+		if (self->length == another->length)
+		{
+			int i;
+
+			for (i = 0; i < self->length; i++)
+			{
+				if (!equals(self->items[i], another->items[i]))
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else if (!self && !another)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 static void * Set_insert(void * _self, void * _setItem)
 {
 	struct Set * self = cast(Set, _self);
@@ -121,6 +184,8 @@ static void * Set_search(void * _self, void * _data)
 		}
 
 		delete(iterator);
+
+		return false;
 	}
 	else
 	{
@@ -258,7 +323,7 @@ void loadSet()
 {
 	if (!Set)
 	{
-		Set = new (List, "Set", Object, sizeof(struct Set), ctor, Set_ctor, dtor, Set_dtor, insert, Set_insert, insertAt, Set_insertAt, toString, Set_toString, search, Set_search, merge, Set_merge, 0);
+		Set = new (List, "Set", Object, sizeof(struct Set), ctor, Set_ctor, dtor, Set_dtor, insert, Set_insert, insertAt, Set_insertAt, toString, Set_toString, search, Set_search, merge, Set_merge, clone, Set_clone, equals, Set_equals, 0);
 	}
 
 	if (!SetIterator)
