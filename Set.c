@@ -18,6 +18,56 @@
 
 
 
+/*
+ * Interface:
+ */
+bool swap(void * _self, int one, int another)
+{
+	struct Set * self = cast(Set, _self);
+
+	if (self)
+	{
+		if (one < self->length && another < self->length)
+		{
+			void * temp = self->items[one];
+			self->items[one] = self->items[another];
+			self->items[another] = temp;
+
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+
+int indexOf(const void * _self, const void * _token)
+{
+	struct Set * self = cast(Set, _self);
+
+	assert(self);
+	assert(_token);
+
+	int index;
+
+	for (index = 0; index < self->length; index ++)
+	{
+		if (_token == self->items[index])
+		{
+			return index;
+		}
+	}
+
+	return -1;
+}
+
+
+
 
 #define DEFAULT_SET_SIZE 10
 
