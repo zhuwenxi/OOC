@@ -12,6 +12,7 @@
 #include "String.h"
 #include "Set.h"
 #include "HashTable.h"
+#include "HashTable_r.h"
 
 
 
@@ -20,48 +21,35 @@ int main()
 {	
 	loadOoc();
 
+	/*struct String * key = new (String, "KEY", 0);
+	struct String * value = new (String, "VALUE", 0);
+	struct Pair * pair = new(Pair, key, value, 0);
+
+	struct String * keyText = toString(pair->key);
+	struct String * valueText = toString(pair->value);
+
+	printf("%s, %s\n", keyText->text, valueText->text);
+
+	delete(pair);*/
+	
+	struct Pair * apple = new (Pair, new(String, "Apple", 0), new(String, "Red", 0), 0);
+	struct Pair * banana = new (Pair, new(String, "Banana", 0), new (String, "Yellow", 0), 0);
+	struct Pair * cat = new (Pair, new(String, "Cat", 0), new (String, "White", 0), 0);
+
 	void * hashTable = new (HashTable, 0);
 
-	insert(hashTable, new (String, "Apple", 0));
-	insert(hashTable, new (String, "Banana", 0));
-	insert(hashTable, new (String, "Cat", 0));
+	insert(hashTable, apple);
+	insert(hashTable, banana);
+	insert(hashTable, cat);
 
-	printf("%s\n", toString(hashTable)->text);
+	struct String * string = toString(hashTable);
+	printf("%s\n", string->text);
+
+	erase(hashTable, new (String, "Banana", 0));
+	erase(hashTable, new (String, "Apple", 0));
+	erase(hashTable, new (String, "Cat", 0));
 
 	delete(hashTable);
-	
-	/*void * set = new (Set, 0);
-
-	insert(set, new(String, "Apple"));
-	insert(set, new(String, "Banana"));
-	insert(set, new(String, "Cat"));
-
-	printf("%s\n", toString(set)->text);
-
-	delete(set);
-
-	void * linkList = new(LinkList, 0);
-
-	void * str1 = new (String, "Apple", 0);
-	void * str2 = new (String, "Banana", 0);
-	void * str3 = new (String, "Cat", 0);
-
-	insert(linkList, str1);
-	printf("%s\n", toString(linkList)->text);
-	insert(linkList, str2);
-	printf("%s\n", toString(linkList)->text);
-	insert(linkList, str3);
-	printf("%s\n", toString(linkList)->text);
-
-	erase(linkList, str2);
-	printf("%s\n", toString(linkList)->text);
-
-	erase(linkList, str3);
-	printf("%s\n", toString(linkList)->text);
-
-	erase(linkList, str1);
-
-	delete(linkList);*/
 
 	/*
 	 * Pause here, to display the command-line output.

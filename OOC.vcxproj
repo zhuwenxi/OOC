@@ -67,6 +67,7 @@
   <ItemGroup>
     <ClCompile Include="Class.c" />
     <ClCompile Include="HashTable.c" />
+    <ClCompile Include="Iterator.c" />
     <ClCompile Include="LinkList.c" />
     <ClCompile Include="List.c" />
     <ClCompile Include="Log.c" />
@@ -83,6 +84,8 @@
     <ClInclude Include="Class_r.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="HashTable_r.h" />
+    <ClInclude Include="Iterator.h" />
+    <ClInclude Include="Iterator_r.h" />
     <ClInclude Include="LinkList.h" />
     <ClInclude Include="LinkList_r.h" />
     <ClInclude Include="List.h" />

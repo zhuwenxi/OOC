@@ -10,4 +10,11 @@ struct HashTable
 	struct LinkList ** slots;
 };
 
+struct Pair
+{
+	struct Object _;
+	void * key;
+	void * value;
+};
+
 #endif

@@ -10,17 +10,21 @@
 #include "List_r.h"
 #include "Object.h"
 #include "Object_r.h"
+#include "Class.h"
+#include "Class_r.h"
 #include "String.h"
 #include "String_r.h"
+#include "New.h"
 
 
 
 
 #define DEFAULT_HASH_TABLE_SIZE 701
 
+static struct Pair * searchPair(const struct LinkList * slot, void * _key);
 static struct LinkList * selectSlot(void * _self, void * _data);
 
-static void * HashTable_ctor(void * _self, va_list args)
+static void * HashTable_ctor(void * _self, va_list * args)
 {
 	struct HashTable * self = cast(HashTable, _self);
 	struct LinkList ** slots;
@@ -61,33 +65,82 @@ static void * HashTable_dtor(void * _self)
 	return self;
 }
 
-static void * HashTable_search(void * _self, void * _data)
+static void * Pair_ctor(void * _self, va_list * args)
 {
-	struct LinkList * slot = selectSlot(_self, _data);
+	struct Pair * self = cast(Pair, _self);
 
-	return search(slot, _data);
+	assert(self);
+
+	self->key = va_arg(*args, void *);
+	self->value = va_arg(*args, void *);
+
+	return _self;
 }
 
-static bool HashTable_insert(void * _self, void * _data)
+static void * Pair_dtor(void * _self)
 {
+	struct Pair * self = cast(Pair, _self);
+
+	assert(self);
+
+	delete(self->key);
+	delete(self->value);
+
+	return _self;
+}
+
+static void * HashTable_search(void * _self, void * _key)
+{
+	struct LinkList * slot = selectSlot(_self, _key);
 	
-	struct LinkList * slot = selectSlot(_self, _data);
+	if (slot)
+	{
+		struct Pair * pair = searchPair(slot, _key);
 
-	assert(slot);
-
-	insert(slot, _data);
-
-	return true;
+		return pair;
+	}
+	else
+	{
+		return NULL;
+	}
 }
 
-static bool HashTable_erase(void * _self, void * _data)
+static bool HashTable_insert(void * _self, void * _pair)
 {
-	void * data = HashTable_search(_self, _data);
-	struct LinkList * slot = selectSlot(_self, _data);
+	struct Pair * pair = cast(Pair, _pair);
 
-	if (data)
+	if (pair && pair->key && pair->value)
 	{
-		return erase(slot, data);
+		struct LinkList * slot = selectSlot(_self, pair->key);
+
+		assert(slot);
+
+		insert(slot, pair);
+
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+static bool HashTable_erase(void * _self, void * _key)
+{
+	struct LinkList * slot = selectSlot(_self, _key);
+
+	if (slot)
+	{
+		struct Pair * pair = searchPair(slot, _key);
+
+		if (pair)
+		{
+			erase(slot, pair);
+		}
+		else
+		{
+			return false;
+		}
 	}
 	else
 	{
@@ -142,6 +195,31 @@ static struct String * HashTable_toString(const void * _self)
 	}
 }
 
+static struct String * Pair_toString(const void * _self)
+{
+	struct Pair * self = cast(Pair, _self);
+
+	if (self && self->key && self->value)
+	{
+		struct String * keyStr = toString(self->key);
+		struct String * valueStr = toString(self->value);
+		struct String * space = new (String, " ", 0);
+		struct String * retVal;
+
+		retVal = add(keyStr, space, valueStr, 0);
+
+		delete(keyStr);
+		delete(valueStr);
+		delete(space);
+
+		return retVal;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
 static struct LinkList * selectSlot(void * _self, void * _data)
 {
 	struct HashTable * self = cast(HashTable, _self);
@@ -162,14 +240,58 @@ static struct LinkList * selectSlot(void * _self, void * _data)
 	return slot;
 }
 
+static struct Pair * searchPair(const struct LinkList * slot, void * _key)
+{
+	if (slot && isA(slot, LinkList))
+	{
+		struct LinkListItem * head = cast(LinkListItem, slot->head);
+
+		if (head)
+		{
+			struct LinkListItem * next = head;
+			struct Pair * pair;
+
+			while (next)
+			{
+				pair = next->data;
+
+				if (pair && isA(pair, Pair) && equals(pair->key, _key))
+				{
+					return pair;
+				}
+				else
+				{
+					return NULL;
+				}
+			}
+		}
+		else
+		{
+			return NULL;
+		}
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+
 
 
 const void * HashTable;
+
+const void * Pair;
 
 void loadHashTable()
 {
 	if (!HashTable)
 	{
 		HashTable = new (List, "HashTable", Object, sizeof(struct HashTable), ctor, HashTable_ctor, dtor, HashTable_dtor, search, HashTable_search, insert, HashTable_insert, erase, HashTable_erase, toString, HashTable_toString, 0);
+	}
+
+	if (!Pair)
+	{
+		Pair = new (Class, "HashTable", Object, sizeof(struct Pair), ctor, Pair_ctor, dtor, Pair_dtor, toString, Pair_toString, 0);
 	}
 }

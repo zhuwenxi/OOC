@@ -4,6 +4,7 @@
 #include "List.h"
 
 extern const void * HashTable;
+extern const void * Pair;
 
 void loadHashTable();
 
