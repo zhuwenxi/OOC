@@ -315,7 +315,14 @@ static struct String * Set_toString(const void * _self)
 
 			if (child)
 			{
-				retVal = add(retVal, child, space, 0);
+				if (i == self->length - 1)
+				{
+					retVal = add(retVal, child, 0);
+				}
+				else
+				{
+					retVal = add(retVal, child, space, 0);
+				}
 			}
 			
 			delete(temp);

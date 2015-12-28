@@ -203,10 +203,10 @@ static struct String * Pair_toString(const void * _self)
 	{
 		struct String * keyStr = toString(self->key);
 		struct String * valueStr = toString(self->value);
-		struct String * space = new (String, " ", 0);
+		struct String * space = new (String, "\n", 0);
 		struct String * retVal;
 
-		retVal = add(keyStr, space, valueStr, 0);
+		retVal = add(new(String, "(KEY):\n"), keyStr, space, new(String, "(VALUE):\n"), valueStr, space, 0);
 
 		delete(keyStr);
 		delete(valueStr);
@@ -259,11 +259,11 @@ static struct Pair * searchPair(const struct LinkList * slot, void * _key)
 				{
 					return pair;
 				}
-				else
-				{
-					return NULL;
-				}
+
+				next = next->next;
 			}
+
+			return NULL;
 		}
 		else
 		{
