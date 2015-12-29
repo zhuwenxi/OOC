@@ -3,6 +3,7 @@
 #include "Set.h"
 #include "LinkList.h"
 #include "Iterator.h"
+#include "Integer.h"
 
 void loadOoc()
 {
@@ -13,5 +14,5 @@ void loadOoc()
 	loadSet();
 	loadLinkList();
 	loadHashTable();
-	
+	loadInteger();
 }
