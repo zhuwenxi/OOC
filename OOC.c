@@ -4,6 +4,10 @@
 #include "LinkList.h"
 #include "Iterator.h"
 #include "Integer.h"
+#include "Stack.h"
+
+
+
 
 void loadOoc()
 {
@@ -15,4 +19,5 @@ void loadOoc()
 	loadLinkList();
 	loadHashTable();
 	loadInteger();
+	loadStack();
 }

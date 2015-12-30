@@ -13,6 +13,8 @@
 #include "Set.h"
 #include "HashTable.h"
 #include "HashTable_r.h"
+#include "Stack.h"
+#include "Stack_r.h"
 
 
 
@@ -21,36 +23,32 @@ int main()
 {	
 	loadOoc();
 
-	/*struct String * key = new (String, "KEY", 0);
-	struct String * value = new (String, "VALUE", 0);
-	struct Pair * pair = new(Pair, key, value, 0);
-
-	struct String * keyText = toString(pair->key);
-	struct String * valueText = toString(pair->value);
-
-	printf("%s, %s\n", keyText->text, valueText->text);
-
-	delete(pair);*/
+	struct Stack * stack = new (Stack, 0);
 	
-	struct Pair * apple = new (Pair, new(String, "Apple", 0), new(String, "Red", 0), 0);
-	struct Pair * banana = new (Pair, new(String, "Banana", 0), new (String, "Yellow", 0), 0);
-	struct Pair * cat = new (Pair, new(String, "Cat", 0), new (String, "White", 0), 0);
+	push(stack, new (String, "Alex", 0), 0);
+	push(stack, new (String, "Bary", 0), 0);
+	push(stack, new (String, "Cathy", 0), 0);
+	
+	printf("pop: %d\n", empty(stack));
+	printf("%s\n", toString(stack)->text);
 
-	void * hashTable = new (HashTable, 0);
+	delete(stack);
+	/*struct Set * set = new (Set, 0);
+	
+	insert(set, new (String, "Alex", 0), 0);
+	insert(set, new (String, "Bary", 0), 0);
+	insert(set, new (String, "Cathy", 0), 0);
+	insert(set, new (String, "Douglas", 0), 0);
+	insert(set, new (String, "Ella", 0), 0);
+	insert(set, new (String, "Frank", 0), 0);
+	insert(set, new (String, "Gaven", 0), 0);
+	insert(set, new (String, "Hill", 0), 0);
+	insert(set, new (String, "Irving", 0), 0);
 
-	insert(hashTable, apple);
-	insert(hashTable, banana);
-	insert(hashTable, cat);
+	erase(set, new (String, "Irving", 0), 0);
+	printf("%s\n", toString(set)->text);
 
-	struct String * string = toString(hashTable);
-	printf("%s\n", string->text);
-
-	erase(hashTable, new (String, "Banana", 0));
-	erase(hashTable, new (String, "Apple", 0));
-	erase(hashTable, new (String, "Cat", 0));
-
-	delete(hashTable);
-
+	delete(set);*/
 	/*
 	 * Pause here, to display the command-line output.
 	 */

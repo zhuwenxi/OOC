@@ -19,6 +19,7 @@ void * new(void * _class, ...)
 	struct Object * obj;
 	va_list args;
 
+	assert(class);
 	assert(class->ctor);
 	
 	if (class != NULL)

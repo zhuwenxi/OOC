@@ -57,7 +57,7 @@ int indexOf(const void * _self, const void * _token)
 
 	for (index = 0; index < self->length; index ++)
 	{
-		if (_token == self->items[index])
+		if (equals(_token, self->items[index]))
 		{
 			return index;
 		}
@@ -169,7 +169,7 @@ static bool Set_equals(const void * _self, const void * _another)
 	}
 }
 
-static void * Set_insert(void * _self, void * _setItem)
+static bool Set_insert(void * _self, void * _setItem)
 {
 	struct Set * self = cast(Set, _self);
 
@@ -181,11 +181,11 @@ static void * Set_insert(void * _self, void * _setItem)
 		
 		self->items[self->length - 1] = _setItem;
 
-		return _setItem;
+		return true;
 	}
 	else
 	{
-		return NULL;
+		return false;
 	}
 }
 
@@ -204,6 +204,39 @@ static bool Set_insertAt(void * _self, void * _data, int index)
 		}
 
 		self->items[index] = _data;
+
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+static bool Set_erase(void * _self, void * _data)
+{
+	assert(_self && _data);
+
+	int index = indexOf(_self, _data);
+
+	if (index >= 0)
+	{
+		struct Set * self = cast(Set, _self);
+
+		assert(self);
+		assert(index < self->length);
+
+		delete(self->items[index]);
+		self->items[index] = NULL;
+
+		int i;
+		for (i = index; i < self->length - 1; i++)
+		{
+			self->items[i] = self->items[i + 1];
+			self->items[i + 1] = NULL;
+		}
+
+		self->length--;
 
 		return true;
 	}
@@ -380,7 +413,7 @@ void loadSet()
 {
 	if (!Set)
 	{
-		Set = new (List, "Set", Object, sizeof(struct Set), ctor, Set_ctor, dtor, Set_dtor, insert, Set_insert, insertAt, Set_insertAt, toString, Set_toString, search, Set_search, merge, Set_merge, clone, Set_clone, equals, Set_equals, 0);
+		Set = new (List, "Set", Object, sizeof(struct Set), ctor, Set_ctor, dtor, Set_dtor, insert, Set_insert, insertAt, Set_insertAt, toString, Set_toString, search, Set_search, erase, Set_erase, merge, Set_merge, clone, Set_clone, equals, Set_equals, 0);
 	}
 
 	if (!SetIterator)

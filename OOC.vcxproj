@@ -67,6 +67,7 @@
   <ItemGroup>
     <ClCompile Include="Class.c" />
     <ClCompile Include="HashTable.c" />
+    <ClCompile Include="Integer.c" />
     <ClCompile Include="Iterator.c" />
     <ClCompile Include="LinkList.c" />
     <ClCompile Include="List.c" />
@@ -77,6 +78,7 @@
     <ClCompile Include="OOC.c" />
     <ClCompile Include="Point.c" />
     <ClCompile Include="Set.c" />
+    <ClCompile Include="Stack.c" />
     <ClCompile Include="String.c" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +86,8 @@
     <ClInclude Include="Class_r.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="HashTable_r.h" />
+    <ClInclude Include="Integer.h" />
+    <ClInclude Include="Integer_r.h" />
     <ClInclude Include="Iterator.h" />
     <ClInclude Include="Iterator_r.h" />
     <ClInclude Include="LinkList.h" />
@@ -101,6 +105,8 @@
     <ClInclude Include="Point_r.h" />
     <ClInclude Include="Set.h" />
     <ClInclude Include="Set_r.h" />
+    <ClInclude Include="Stack.h" />
+    <ClInclude Include="Stack_r.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="String_r.h" />
   </ItemGroup>
