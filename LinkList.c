@@ -166,7 +166,7 @@ static struct String * LinkList_toString(const void * self)
 
 				if (property)
 				{ 
-					if (!next->next)
+					if (next->next)
 					{
 						retVal = add(retVal, property, space, 0);
 					}

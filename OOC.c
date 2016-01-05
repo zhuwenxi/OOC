@@ -5,6 +5,7 @@
 #include "Iterator.h"
 #include "Integer.h"
 #include "Stack.h"
+#include "Queue.h"
 
 
 
@@ -20,4 +21,5 @@ void loadOoc()
 	loadHashTable();
 	loadInteger();
 	loadStack();
+	loadQueue();
 }
