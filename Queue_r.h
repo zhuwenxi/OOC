@@ -22,6 +22,7 @@ struct QueueClass
 	struct Class _;
 	void * (*enqueue)(void * self, void * element);
 	void * (*dequeue)(void * self);
+	void * (*unshift)(void * self, void * element);
 };
 
 #endif

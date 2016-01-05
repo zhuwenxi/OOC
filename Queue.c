@@ -29,6 +29,14 @@ void * dequeue(void * _self)
 	return class->dequeue(_self);
 }
 
+void * unshift(void * _self, void * _element)
+{
+	struct QueueClass * class = classOf(_self);
+	assert(class);
+
+	return class->unshift(_self, _element);
+}
+
 void * Queue_ctor(void * _self, va_list * args)
 {
 	struct Queue * self = cast(Queue, _self);
@@ -91,6 +99,34 @@ void * Queue_dequeue(void * _self)
 	}
 }
 
+void * Queue_unshift(void * _self, void * _element)
+{
+	struct Queue * self = cast(Queue, _self);
+	assert(self);
+
+	struct LinkList * _queue = cast(LinkList, self->_queue);
+	assert(_queue);
+
+	struct LinkListItem * newElement = new (LinkListItem, _element, 0);
+
+	if (_queue->head)
+	{
+		struct LinkListItem * next = _queue->head;
+
+		_queue->head = newElement;
+		newElement->next = next;
+		newElement->prev = NULL;
+		
+		next->prev = newElement;
+	}
+	else
+	{
+		_queue->head = newElement;
+		newElement->prev = NULL;
+		newElement->next = NULL;
+	}
+}
+
 void * Queue_toString(void * _self)
 {
 	struct Queue * self = cast(Queue, _self);
@@ -125,6 +161,10 @@ void * QueueClass_ctor(void * _self, va_list * args)
 		{
 			self->dequeue = method;
 		}
+		else if (selector == unshift)
+		{
+			self->unshift = method;
+		}
 	}
 
 	return _self;
@@ -145,6 +185,6 @@ void loadQueue()
 
 	if (!Queue)
 	{
-		Queue = new (QueueClass, "Queue", Object, sizeof(struct Queue), ctor, Queue_ctor, dtor, Queue_dtor, toString, Queue_toString, enqueue, Queue_enqueue, dequeue, Queue_dequeue, 0);
+		Queue = new (QueueClass, "Queue", Object, sizeof(struct Queue), ctor, Queue_ctor, dtor, Queue_dtor, toString, Queue_toString, enqueue, Queue_enqueue, dequeue, Queue_dequeue, unshift, Queue_unshift, 0);
 	}
 }
