@@ -75,26 +75,33 @@ void * Queue_dequeue(void * _self)
 	struct LinkList * _queue = cast(LinkList, self->_queue);
 	assert(_queue);
 
-	struct LinkListItem * next = _queue->head;
+	struct LinkListItem * first = _queue->head;
 
-	if (!next)
+	if (!first)
 	{
 		return NULL;
 	}
 	else
 	{
-		while (next->next)
+		/*while (next->next)
 		{
 			next = next->next;
-		}
+		}*/
 
-		assert(next);
+		assert(first);
+		struct LinkListItem * next = first->next;
 
-		void * data = next->data;
+		void * data = first->data;
 		void * retData = clone(data);
 
 		erase(_queue, data);
 
+		if (next)
+		{
+			next->prev = NULL;
+			self->_queue->head = next;
+		}
+		
 		return retData;
 	}
 }

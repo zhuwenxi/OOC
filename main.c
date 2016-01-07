@@ -27,8 +27,8 @@ int main()
 
 	struct Queue * q = new (Queue, 0);
 
-	unshift(q, new (String, "Doris", 0), 0);
-	printf("%s\n", toString(q)->text);
+	/*unshift(q, new (String, "Doris", 0), 0);
+	printf("%s\n", toString(q)->text);*/
 
 	enqueue(q, new (String, "Alex", 0), 0);
 	enqueue(q, new (String, "Bary", 0), 0);
@@ -36,7 +36,18 @@ int main()
 
 	printf("%s\n", toString(q)->text);
 
+	dequeue(q);
+	printf("%s\n", toString(q)->text);
 
+	dequeue(q);
+	printf("%s\n", toString(q)->text);
+
+	dequeue(q);
+	dequeue(q);
+	dequeue(q);
+	printf("%p\n", toString(q));
+
+	delete(q);
 	/*dequeue(q);
 	printf("%s\n", toString(q)->text);
 
@@ -48,7 +59,7 @@ int main()
 	dequeue(q);
 	printf("%p\n", toString(q));*/
 
-	delete(q);
+	
 	/*struct Stack * stack = new (Stack, 0);
 	
 	push(stack, new (String, "Alex", 0), 0);
