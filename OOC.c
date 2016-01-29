@@ -6,6 +6,7 @@
 #include "Integer.h"
 #include "Stack.h"
 #include "Queue.h"
+#include "AbstractSyntaxTree.h"
 
 
 
@@ -22,4 +23,5 @@ void loadOoc()
 	loadInteger();
 	loadStack();
 	loadQueue();
+	loadAbstractSyntaxTree();
 }

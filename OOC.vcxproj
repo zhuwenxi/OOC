@@ -65,6 +65,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractSyntaxTree.c" />
     <ClCompile Include="Class.c" />
     <ClCompile Include="HashTable.c" />
     <ClCompile Include="Integer.c" />
@@ -83,6 +84,8 @@
     <ClCompile Include="String.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractSyntaxTree.h" />
+    <ClInclude Include="AbstractSyntaxTree_r.h" />
     <ClInclude Include="Class.h" />
     <ClInclude Include="Class_r.h" />
     <ClInclude Include="HashTable.h" />

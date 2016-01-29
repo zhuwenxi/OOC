@@ -17,6 +17,8 @@
 #include "Stack_r.h"
 #include "Queue.h"
 #include "Queue_r.h"
+#include "AbstractSyntaxTree.h"
+#include "AbstractSyntaxTree_r.h"
 
 
 
@@ -25,51 +27,14 @@ int main()
 {	
 	loadOoc();
 
-	struct Queue * q = new (Queue, 0);
+	struct AbstractSyntaxTree * ast = new (AbstractSyntaxTree, 0);
+	struct AbstractSyntaxTreeNode * root = new (AbstractSyntaxTreeNode, 0);
 
-	/*unshift(q, new (String, "Doris", 0), 0);
-	printf("%s\n", toString(q)->text);*/
+	ast->root = root;
+	printf("%d\n", root->isLeaf);
 
-	enqueue(q, new (String, "Alex", 0), 0);
-	enqueue(q, new (String, "Bary", 0), 0);
-	enqueue(q, new (String, "Cathy", 0), 0);
-
-	printf("%s\n", toString(q)->text);
-
-	dequeue(q);
-	printf("%s\n", toString(q)->text);
-
-	dequeue(q);
-	printf("%s\n", toString(q)->text);
-
-	dequeue(q);
-	dequeue(q);
-	dequeue(q);
-	printf("%p\n", toString(q));
-
-	delete(q);
-	/*dequeue(q);
-	printf("%s\n", toString(q)->text);
-
-	dequeue(q);
-	printf("%s\n", toString(q)->text);
-
-	dequeue(q);
-	dequeue(q);
-	dequeue(q);
-	printf("%p\n", toString(q));*/
-
+	delete(ast);
 	
-	/*struct Stack * stack = new (Stack, 0);
-	
-	push(stack, new (String, "Alex", 0), 0);
-	push(stack, new (String, "Bary", 0), 0);
-	push(stack, new (String, "Cathy", 0), 0);
-	
-	printf("pop: %d\n", empty(stack));
-	printf("%s\n", toString(stack)->text);
-
-	delete(stack);*/
 	
 	/*
 	 * Pause here, to display the command-line output.
