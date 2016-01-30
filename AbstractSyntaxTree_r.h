@@ -17,8 +17,8 @@ struct AbstractSyntaxTreeNode
 {
 	struct Object _;
 	struct String * operator;
-	struct AbstractSyntaxTreeNodeOperator * leftOperand;
-	struct AbstractSyntaxTreeNodeOperator * rightOperand;
+	struct AbstractSyntaxTreeNode * leftOperand;
+	struct AbstractSyntaxTreeNode * rightOperand;
 	struct String * value;
 	bool isLeaf;
 };

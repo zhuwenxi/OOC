@@ -28,10 +28,22 @@ int main()
 	loadOoc();
 
 	struct AbstractSyntaxTree * ast = new (AbstractSyntaxTree, 0);
-	struct AbstractSyntaxTreeNode * root = new (AbstractSyntaxTreeNode, 0);
 
+	struct AbstractSyntaxTreeNode * root = new (AbstractSyntaxTreeNode, 0);
+	root->value = new (String, "Root", 0);
+
+	struct AbstractSyntaxTreeNode * left = new (AbstractSyntaxTreeNode, 0);
+	left->value = new (String, "Left", 0);
+
+	struct AbstractSyntaxTreeNode * right = new (AbstractSyntaxTreeNode, 0);
+	right->value = new (String, "Right");
+	
 	ast->root = root;
-	printf("%d\n", root->isLeaf);
+	root->leftOperand = left;
+	root->rightOperand = right;
+
+	
+	printf("%s\n", toString(ast)->text);
 
 	delete(ast);
 	
