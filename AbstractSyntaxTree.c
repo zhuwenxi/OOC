@@ -99,10 +99,20 @@ struct String * AbstractSyntaxTreeNode_toString(const void * _self)
 	struct AbstractSyntaxTreeNode * self = cast(AbstractSyntaxTreeNode, _self);
 	assert(self);
 
-	struct String * selfStr = clone(self->value);
+	struct String * selfStr = NULL;
+
+	if (self->value)
+	{
+		selfStr = clone(self->value);
+	}
 	
 	if (self->leftOperand)
 	{
+		if (!selfStr)
+		{
+			selfStr = new (String, "", 0);
+		}
+
 		struct String * tmp = selfStr;
 		struct String * lineFeed = new (String, "\n", 0);
 		struct String * leftOperandStr = toString(self->leftOperand);
@@ -115,6 +125,11 @@ struct String * AbstractSyntaxTreeNode_toString(const void * _self)
 
 	if (self->rightOperand)
 	{
+		if (!selfStr)
+		{
+			selfStr = new (String, "", 0);
+		}
+
 		struct String * tmp = selfStr;
 		struct String * lineFeed = new (String, "\n", 0);
 		struct String * rightOperandStr = toString(self->rightOperand);
